@@ -8,6 +8,7 @@ public class LoadLevel : MonoBehaviour
 {
 
     public Image progressBar;
+    public string pantallaACargar;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,7 @@ public class LoadLevel : MonoBehaviour
     IEnumerator LoadLevelAsync()
     {
         //create an asybc operation = loadSceneAsync
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Main");
+        AsyncOperation operation = SceneManager.LoadSceneAsync(pantallaACargar);
         //while operation ins´t finished
         while (!operation.isDone)
         {
