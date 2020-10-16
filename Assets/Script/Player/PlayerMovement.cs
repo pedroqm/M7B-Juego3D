@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public int speed, smooth;
+    public float speed, smooth;
     Animator anim;
     Rigidbody rb;
     Vector3 movement;
 
     PlayerAttack playerAttack;
+
+    public bool walking =false;
 
     void Start()
     {
@@ -47,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     void Animation(float _h, float _v)
     {
 
-        bool walking = _h != 0f || _v != 0f;
+        walking = _h != 0f || _v != 0f;
         anim.SetBool("IsWalking", walking);
     }
 
