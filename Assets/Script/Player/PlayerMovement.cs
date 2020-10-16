@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public int speed, smooth, angle;
+    public int speed, smooth;
     Animator anim;
     Rigidbody rb;
     Vector3 movement;
@@ -29,41 +29,19 @@ public class PlayerMovement : MonoBehaviour
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
-            Move(h, v);
+            float g = Input.GetAxisRaw("Girar");
+            Move(h, v, g);
 
 
             Animation(h, v);
         }
     }
   
-    void Move(float _h, float _v)
-    {
-        movement.Set(_h, 0, _v); //Establecemos la variable Vector3 movement en base a los input
-        movement = movement.normalized * speed * Time.deltaTime; //normalizamos el vector3 movement y multiplicamos por la velocidad
-        rb.MovePosition(transform.position + movement); //Movemos el player sumandole a su posicion actual el vector movimiento
-
-        /*
-        transform.Translate(Vector3.forward * v * speed * Time.deltaTime);
-        transform.Translate(Vector3.right * h * speed * Time.deltaTime);
-        */
-
-
-       /* if (Input.GetKey(KeyCode.Q))
-        {
-            // Rotate the cube by converting the angles into a quaternion.
-            Quaternion target = Quaternion.Euler(0, -1 * angle, 0);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
-            //Quaternion.AngleAxis;
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            // Rotate the cube by converting the angles into a quaternion.
-            Quaternion target = Quaternion.Euler(0, angle, 0);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
-        }*/
-
+    void Move(float _h, float _v, float _g)
+    {       
+        transform.Translate(Vector3.forward * _v * speed * Time.deltaTime);
+        transform.Translate(Vector3.right * _h * speed * Time.deltaTime);
+        transform.Rotate(Vector3.up * _g * smooth * Time.deltaTime);
     }
 
     void Animation(float _h, float _v)

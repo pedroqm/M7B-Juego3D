@@ -21,13 +21,23 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && canAttack)
+        if (canAttack && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1)))
         {
             Debug.Log(canAttack);
             source.GenerateImpulse(Camera.main.transform.forward);
             canAttack = false;
+            
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {                
+                anim.SetTrigger("Attack1");
+                Invoke("StopAttack", 0.7f);
+            }
+            if(Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                anim.SetTrigger("Attack2");
+                Invoke("StopAttack", 1.2f);
+            }
             anim.SetBool("Attack", true);
-            Invoke("StopAttack",0.7f);
         }
     }
 
@@ -35,5 +45,6 @@ public class PlayerAttack : MonoBehaviour
     {
         canAttack = true;
         anim.SetBool("Attack", false);
+        //anim.Play("Idle");
     }
 }
