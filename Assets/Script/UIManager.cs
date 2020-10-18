@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene(Levels.MAINMENU);
     }
 
     public void Quit()

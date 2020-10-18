@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,16 +11,19 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;
     Rigidbody rb;
     Vector3 movement;
+    public GameObject panelWin;
 
     PlayerAttack playerAttack;
 
     public bool walking =false;
+
 
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         playerAttack = GetComponent<PlayerAttack>();
+        Time.timeScale = 1;
     }
 
     //USAMOS FIXEDUPDATE PORQUE VAMOS A HACER EL MOVIMIENTO MEDIANTE FÍSICAS
@@ -53,4 +58,13 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsWalking", walking);
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Exit"))
+        {
+            panelWin.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
 }
