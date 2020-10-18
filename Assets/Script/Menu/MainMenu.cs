@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
     {
 
         fadeOff.SetActive(true);
-        Invoke("EmpezarPartida", 1.5f);
+        EmpezarPartida();
     }
 
     void EmpezarPartida()
