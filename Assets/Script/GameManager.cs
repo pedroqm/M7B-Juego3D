@@ -5,7 +5,10 @@ using UnityEngine.Playables;
 
 public class GameManager : MonoBehaviour
 {
-   private static GameManager _instance;
+    private static GameManager _instance;
+
+    public AudioClip clip;
+    AudioManager audioManager;
 
     public static GameManager Instance
     {
@@ -20,25 +23,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public bool HasCard
-    {
-        get;
-        set;
-    }
-
-    public PlayableDirector introCutscene;
-
     private void Awake()
     {
-        _instance = this;        
+        _instance = this;
+
+    }
+
+    private void Start()
+    {
+        AudioManager.Instance.PlayMusic(clip);
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            introCutscene.time = 62f;
-
-        }
+        
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     private static UIManager _instance;
+    public AudioClip clip;
 
     public static UIManager Instance
     {
@@ -27,6 +28,7 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
+        AudioManager.Instance.PlayMusic(clip);
         SceneManager.LoadScene(Levels.MAINMENU);
     }
 

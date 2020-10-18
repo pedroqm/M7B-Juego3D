@@ -5,6 +5,10 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager _instance;
+    public AudioClip menu;
+
+    public AudioSource audioSource;
+
 
     public static AudioManager Instance
     {
@@ -19,16 +23,20 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public AudioSource voiceOver;
 
     private void Awake()
     {
-        _instance = this;
+        if (_instance == null)
+        {
+            _instance = this;
+            PlayMusic(menu);
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
-    public void PlayVoiceOver(AudioClip clipToPlay)
+    public void PlayMusic(AudioClip clipToPlay)
     {
-        voiceOver.clip = clipToPlay;
-        voiceOver.Play();
+        audioSource.clip = clipToPlay;
+        audioSource.Play();
     }
 }
