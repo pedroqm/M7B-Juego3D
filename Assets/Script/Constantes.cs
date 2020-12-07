@@ -22,6 +22,9 @@ public class Levels
 public class Tags
 {
     public const string PLAYER = "Player";
+    public const string EXIT = "Exit";
+    public const string WEAPON = "Weapon";
+    public const string ENEMY = "Enemy";
 }
 
 public class Animaciones

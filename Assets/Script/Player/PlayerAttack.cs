@@ -4,36 +4,42 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-     Cinemachine.CinemachineImpulseSource source;
+    Cinemachine.CinemachineImpulseSource source;
     Animator anim;
     [HideInInspector]
     public bool canAttack = true;
+    public BoxCollider weapon;
 
+    public AudioClip weaponAttack;
+    AudioSource audioPlayer;
 
-    // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         source = GetComponent<Cinemachine.CinemachineImpulseSource>();
+        audioPlayer = GetComponent<AudioSource>();
         canAttack = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (canAttack && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1)))
         {
-            Debug.Log(canAttack);
             source.GenerateImpulse(Camera.main.transform.forward);
             canAttack = false;
-            
+            audioPlayer.clip = weaponAttack;
             if (Input.GetKeyDown(KeyCode.Mouse0))
-            {                
+            {
+               
+                weapon.enabled = true;
+                audioPlayer.Play();
                 anim.SetTrigger("Attack1");
                 Invoke("StopAttack", 0.7f);
             }
             if(Input.GetKeyDown(KeyCode.Mouse1))
             {
+                weapon.enabled = true;
+                audioPlayer.Play();
                 anim.SetTrigger("Attack2");
                 Invoke("StopAttack", 1.2f);
             }
@@ -43,8 +49,9 @@ public class PlayerAttack : MonoBehaviour
 
     void StopAttack()
     {
+        weapon.enabled = false;
         canAttack = true;
         anim.SetBool("Attack", false);
-        //anim.Play("Idle");
+        
     }
 }

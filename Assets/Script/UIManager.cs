@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
     public void Restart()
     {
         AudioManager.Instance.PlayMusic(clip);
-        SceneManager.LoadScene(Levels.MAINMENU);
+        SceneManager.LoadScene(Levels.SELECTLEVEL);
     }
 
     public void Quit()

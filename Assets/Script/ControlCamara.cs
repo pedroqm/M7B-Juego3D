@@ -13,7 +13,7 @@ public class ControlCamara : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
-    private void LateUpdate()
+    private void Update()
     {
         ControlDeCamara();
     }

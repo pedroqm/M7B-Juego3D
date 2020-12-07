@@ -1004,7 +1004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &944251253
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1821,6 +1821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4f202f65bc67040b10130bd36b4b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeIn: {fileID: 944251252}
   fadeOff: {fileID: 170597495}
   canvasInstrucciones: {fileID: 998680532}
 --- !u!1001 &8378051547011642778

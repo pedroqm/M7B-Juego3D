@@ -32,6 +32,11 @@ public class LoadLevel : MonoBehaviour
         pantallaACargar = Levels.LEVEL_2;
         StartCoroutine("LoadLevelAsync");
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
     IEnumerator LoadLevelAsync()
     {
         if (pantallaACargar != null)

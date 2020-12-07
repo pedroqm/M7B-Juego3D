@@ -17,6 +17,8 @@ public class GuardAI : MonoBehaviour
     bool wait = false;
     bool atacando = false;
     public float distanciaPerseguir = 4f;
+    public float speed = 3;
+    public float speedPerseguir = 4;
 
     Animator anim;
     AudioSource audioSource;
@@ -50,7 +52,7 @@ public class GuardAI : MonoBehaviour
         if (!perseguir)
         {
             guardNav.SetDestination(listWayPoint[i].position);
-            //Debug.Log("Distancia del punto : " + distance);
+            guardNav.speed = speed;
             if (distance < 1.5f && wait == false)
             {
                 wait = true;
@@ -62,14 +64,18 @@ public class GuardAI : MonoBehaviour
         } // Si perseguir es verdadero, el personaje ira hacia la posicion del personaje
         else
         {
+            guardNav.speed = speedPerseguir;
             anim.SetBool(Animaciones.PATRULLAR, false);
             anim.SetBool(Animaciones.PERSEGUIR, true);
-            guardNav.SetDestination(player.transform.position);
-
-            if (distanciaDelJugador < 1.5f && !atacando) 
+            if (!atacando)
+            {
+                guardNav.SetDestination(player.transform.position);
+            }
+            
+            if (distanciaDelJugador < 1.2f && !atacando) 
             {
                 atacando = true;
-                Invoke("Atacar", 0.5f);
+                Invoke("Atacar", 0.1f);
             }
 
             if (distanciaDelJugador > distanciaPerseguir)
@@ -88,11 +94,11 @@ public class GuardAI : MonoBehaviour
     void Atacar()
     {
         Debug.Log("Ataca");
-        player.SendMessage("AtacarPlayer", 1f);
-        audioSource.clip = audioAtacar;
-        audioSource.Play();
         //quitar vida al player
+        player.SendMessage("AtacarPlayer", 1f);
         //hacer sonido de ataque
+        audioSource.clip = audioAtacar;
+        audioSource.Play();        
         Invoke("DejarDeAtacar", 1);
     }
 
