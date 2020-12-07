@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float speed, smooth;
+    public float speed, smooth, gravity;
     Animator anim;
     Rigidbody rb;
     Vector3 movement;
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    //USAMOS FIXEDUPDATE PORQUE VAMOS A HACER EL MOVIMIENTO MEDIANTE FÍSICAS
+    //USAMOS FIXEDUPDATE PORQUE VAMOS A HACER EL MOVIMIENTO MEDIANTE FISICAS
     void FixedUpdate()
     {
         //GetAxis devuelve valores entre -1 y 1 
@@ -45,10 +45,16 @@ public class PlayerMovement : MonoBehaviour
     }
   
     void Move(float _h, float _v, float _g)
-    {       
-        transform.Translate(Vector3.forward * _v * speed * Time.deltaTime);
-        transform.Translate(Vector3.right * _h * speed * Time.deltaTime);
-        transform.Rotate(Vector3.up * _g * smooth * Time.deltaTime);
+    {
+        //transform.Translate(Vector3.forward * _v * speed * Time.deltaTime);
+        //transform.Translate(Vector3.right * _h * speed * Time.deltaTime);
+        //transform.Rotate(Vector3.up * _g * smooth * Time.deltaTime);
+
+        Vector3 movimientoFrontal = transform.forward * speed * _v;
+        Vector3 movimientoLateral = transform.right * speed * _h;
+        Vector3 velocidadVertical = new Vector3(0, rb.velocity.y, 0);
+
+        rb.velocity = movimientoFrontal + movimientoLateral + velocidadVertical;
     }
 
     void Animation(float _h, float _v)
@@ -65,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
         {
             panelWin.SetActive(true);
             Time.timeScale = 0;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

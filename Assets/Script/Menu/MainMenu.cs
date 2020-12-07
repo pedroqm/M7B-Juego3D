@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
 
     public GameObject fadeOff;
+    public GameObject canvasInstrucciones;
 
     private void Awake()
     {
@@ -29,4 +30,14 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void Instrucciones()
+    {
+        canvasInstrucciones.SetActive(true);
+    }
+    public void Volver()
+    {
+        canvasInstrucciones.SetActive(false);
+    }
+
 }

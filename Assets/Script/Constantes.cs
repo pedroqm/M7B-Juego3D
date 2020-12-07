@@ -6,6 +6,9 @@ public class Axis
 {
     public const string HORIZONTAL = "Horizontal";
     public const string VERTICAL = "Vertical";
+    public const string MOUSEX = "Mouse X";
+    public const string MOUSEY = "Mouse Y";
+
 }
 public class Levels
 {
@@ -18,5 +21,12 @@ public class Levels
 
 public class Tags
 {
+    public const string PLAYER = "Player";
+}
+
+public class Animaciones
+{
+    public const string PERSEGUIR = "Perseguir";
+    public const string PATRULLAR = "Patrullar";
 
 }
