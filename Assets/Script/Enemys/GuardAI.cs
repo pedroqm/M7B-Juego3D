@@ -20,10 +20,19 @@ public class GuardAI : MonoBehaviour
     public float speed = 3;
     public float speedPerseguir = 4;
 
+
+    public int vida = 2;
+    
+    [HideInInspector]
+    public bool atacado;
+
     Animator anim;
     AudioSource audioSource;
+    public AudioClip dano;
+    public AudioClip muerte;
     public AudioClip audioAtacar;
     public AudioClip audioPatrullar;
+
 
     private void Start()
     {
@@ -33,6 +42,7 @@ public class GuardAI : MonoBehaviour
 
         anim.SetBool(Animaciones.PATRULLAR, false);
         perseguir = false;
+        atacado = false;
     }
 
     private void Update()
@@ -64,6 +74,7 @@ public class GuardAI : MonoBehaviour
         } // Si perseguir es verdadero, el personaje ira hacia la posicion del personaje
         else
         {
+
             guardNav.speed = speedPerseguir;
             anim.SetBool(Animaciones.PATRULLAR, false);
             anim.SetBool(Animaciones.PERSEGUIR, true);
@@ -72,7 +83,7 @@ public class GuardAI : MonoBehaviour
                 guardNav.SetDestination(player.transform.position);
             }
             
-            if (distanciaDelJugador < 1.2f && !atacando) 
+            if (distanciaDelJugador < 1.7f && !atacando && vida != 0) 
             {
                 atacando = true;
                 Invoke("Atacar", 0.1f);
@@ -93,13 +104,13 @@ public class GuardAI : MonoBehaviour
 
     void Atacar()
     {
-        Debug.Log("Ataca");
         //quitar vida al player
         player.SendMessage("AtacarPlayer", 1f);
         //hacer sonido de ataque
         audioSource.clip = audioAtacar;
-        audioSource.Play();        
-        Invoke("DejarDeAtacar", 1);
+        audioSource.Play();
+        anim.SetBool("ataque", true);
+        Invoke("DejarDeAtacar", 1.5f);
     }
 
     void DejarDeAtacar()
@@ -107,6 +118,7 @@ public class GuardAI : MonoBehaviour
         atacando = false;
         audioSource.clip = audioPatrullar;
         audioSource.Play();
+        anim.SetBool("ataque", false);
     }
 
     IEnumerator MueveGuardia()
@@ -134,5 +146,47 @@ public class GuardAI : MonoBehaviour
         }
 
 
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == Tags.WEAPON)
+        {
+
+            if (!atacado)
+            {
+                //GameObject player = GameObject.FindGameObjectWithTag(Tags.PLAYER).gameObject;
+                //GetComponent<Rigidbody>().AddForce(player.transform.forward * impulso, ForceMode.Impulse);
+                print("pierde vida");
+                atacado = true;
+                vida--;
+
+                if (vida <= 0)
+                {
+                    audioSource.clip = muerte;
+                    audioSource.Play();
+                    anim.SetTrigger("die");
+                    Destroy(this.gameObject, 2f);
+                    Invoke("NoAtacado", 2f);
+                }
+                else
+                {
+                    audioSource.clip = dano;
+                    audioSource.Play();
+                    anim.SetBool("dano", true);
+                    Invoke("NoAtacado", 0.7f);
+                }
+
+            }
+        }
+
+    }
+
+    void NoAtacado()
+    {
+        anim.SetBool("dano", false);
+        atacado = false;
+        audioSource.Stop();
     }
 }
